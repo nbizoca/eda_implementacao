@@ -2,10 +2,10 @@ package estruturas.fila;
 
 public interface Fila<T> {
 
-    // Adiciona um elemento no final da fila (equivalente ao push)
+    // Adiciona um elemento no final da fila
     void enqueue(T elemento);
 
-    // Remove e retorna o elemento do início da fila (equivalente ao pop)
+    // Remove e retorna o elemento do início da fila
     T dequeue();
 
     // Apenas retorna (visualiza) o elemento do início da fila, sem remover (equivalente ao top)
