@@ -32,4 +32,20 @@ public class FilaImpl<T> implements Fila<T> {
     public boolean isFull() {
         return this.tamanho == this.capacidade;//Vai ser cheia se o tamanho da fila atinge a capacidade.
     }
+    @Override
+    public void enqueue(T elemento) {
+        if (isFull()) {
+            throw new IllegalStateException("Erro: A fila está cheia! (Queue Overflow)");
+        }
+
+        // Se (fim + 1) for igual à capacidade, o resto da divisão será 0, fazendo o índice voltar para o início.
+        this.fim = (this.fim + 1) % this.capacidade;
+
+        // Adiciona o elemento na nova posição do fim
+        this.elementos[this.fim] = elemento;
+
+        // Aumenta a contagem de pessoas na fila
+        this.tamanho++;
+    }
+
 }
