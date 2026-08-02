@@ -21,8 +21,19 @@ public class PilhaImpl<T> implements Pilha<T> {
         // -1 significa que não há nenhum elemento apontado ainda e a pilha está vazia.
         this.topo = -1;
     }
+    //Método para verificar se está vazia
+    @Override
+    public boolean isEmpty() {
+        return this.topo == -1;
+    }
+    //Método para verificar se está cheia.
+    @Override
+    public boolean isFull() {
+        // Se a capacidade for 10, o último índice válido é o 9.
+        return this.topo == this.capacidade - 1;
+    }
 
-    // ... os outros métodos virão aqui!
+
 }
 
 
