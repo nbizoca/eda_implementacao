@@ -60,5 +60,13 @@ public class PilhaImpl<T> implements Pilha<T> {
         return elementoRemovido;
     }
 
+    @Override
+    public T top() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Erro: A pilha está vazia! Não há elementos para visualizar.");
+        }
+        // Apenas retorna o elemento, sem decrementar o topo ou anular a referência
+        return this.elementos[this.topo];
+    }
 
 }
