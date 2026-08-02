@@ -33,8 +33,32 @@ public class PilhaImpl<T> implements Pilha<T> {
         return this.topo == this.capacidade - 1;
     }
 
+    @Override
+    public void push(T elemento) {
+        if (isFull()) {
+            // IllegalStateException é a exceção ideal para quando o estado da estrutura não permite a ação
+            throw new IllegalStateException("Erro: A pilha está cheia! (Stack Overflow)");
+        }
 
-}
+        // Incrementa o índice do topo e insere o elemento
+        this.topo++;
+        this.elementos[this.topo] = elemento;
+    }
+
+    @Override
+    public T pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Erro: A pilha está vazia! (Stack Underflow)");
+        }
+        // Salva o elemento que está no topo antes de mexer nos ponteiros
+        T elementoRemovido = this.elementos[this.topo];
+        //anular a referência para otimizar o uso da memória.
+        this.elementos[this.topo] = null;
+        // Desce o topo para o elemento de baixo
+        this.topo--;
+
+        return elementoRemovido;
+    }
 
 
 }
