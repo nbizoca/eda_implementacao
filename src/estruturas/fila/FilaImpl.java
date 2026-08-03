@@ -32,6 +32,7 @@ public class FilaImpl<T> implements Fila<T> {
     public boolean isFull() {
         return this.tamanho == this.capacidade;//Vai ser cheia se o tamanho da fila atinge a capacidade.
     }
+    //Enqueue adciona elemento no final da fila
     @Override
     public void enqueue(T elemento) {
         if (isFull()) {
@@ -44,8 +45,38 @@ public class FilaImpl<T> implements Fila<T> {
         // Adiciona o elemento na nova posição do fim
         this.elementos[this.fim] = elemento;
 
-        // Aumenta a contagem de pessoas na fila
+        // Aumenta a contagem de elementos na fila
         this.tamanho++;
+    }
+    //Dequeue remove elemento do início da fila
+    @Override
+    public T dequeue() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Erro: A fila está vazia! Não há quem atender. (Queue Underflow)");
+        }
+
+        //Salvamos o elemento que está no início antes de mexer nos ponteiros
+        T elementoRemovido = this.elementos[this.inicio];
+
+        //Apagamos a referência para o Garbage Collector do Java liberar a memória
+        this.elementos[this.inicio] = null;
+
+        //O início anda um passo. Se estourar o limite, volta pro zero.
+        this.inicio = (this.inicio + 1) % this.capacidade;
+
+        //Diminuímos a quantidade de elementos na fila
+        this.tamanho--;
+
+        return elementoRemovido;
+    }
+    //Verificamos
+    @Override
+    public T head() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Erro: A fila está vazia! Não há ninguém no início.");
+        }
+        // Apenas retorna quem é o primeiro da fila, sem removê-lo
+        return this.elementos[this.inicio];
     }
 
 }
