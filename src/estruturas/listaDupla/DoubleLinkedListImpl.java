@@ -23,24 +23,44 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
         this.tamanho = 0;
     }
 
-    // --- Métodos utilitários que já podemos implementar direto ---
-
     @Override
     public int size() {
-        return this.tamanho;
+        return this.tamanho;//verificar o tamanho da lista
     }
-
+    //verificar se está vazia
     @Override
     public boolean isEmpty() {
         // A lista está vazia se o tamanho for zero (ou se inicio == null)
         return this.tamanho == 0;
     }
-
-    // --- Métodos que vamos implementar a seguir ---
-
+    /**
+     * Insere um novo elemento no final da lista.
+     * Graças ao ponteiro 'fim',a operação tem complexidade O(1).
+     */
     @Override
     public void insert(T elemento) {
-        // Será implementado a seguir
+        // 1. Fabricamos o novo vagão com a carga
+        NoDuplo<T> novoNo = new NoDuplo<>(elemento);
+
+        // 2. Cenário 1: O trem está vazio
+        if (isEmpty()) {
+            this.inicio = novoNo;
+            this.fim = novoNo; // Ele é o primeiro e o último!
+        }
+        // 3. Cenário 2: O trem já tem vagões (vamos inserir no final)
+        else {
+            // O vagão que era o último agora tem o novo vagão como seu "próximo"
+            this.fim.setProximo(novoNo);
+
+            // O engate traseiro (anterior) do novo vagão se conecta no antigo último vagão
+            novoNo.setAnterior(this.fim);
+
+            // A estação atualiza seu registro: o novo vagão é oficialmente o último
+            this.fim = novoNo;
+        }
+
+        // 4. Aumentamos o tamanho do trem
+        this.tamanho++;
     }
 
     @Override
