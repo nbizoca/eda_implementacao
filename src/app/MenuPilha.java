@@ -1,28 +1,28 @@
 package app;
 
-import estruturas.fila.FilaImpl;
+import estruturas.pilha.PilhaImpl;
 
 import java.util.Scanner;
 
-public class MenuFila {
+public class MenuPilha {
 
     private final Scanner scanner;
 
-    public MenuFila(Scanner scanner) {
+    public MenuPilha(Scanner scanner) {
         this.scanner = scanner;
     }
 
     public void iniciar() {
         System.out.println();
         System.out.println("====================================");
-        System.out.println("Criação da Fila");
+        System.out.println("Criação da Pilha");
         System.out.println("====================================");
 
         int capacidade;
 
         do {
             capacidade = lerInteiro(
-                    "Informe a capacidade da fila: "
+                    "Informe a capacidade da pilha: "
             );
 
             if (capacidade <= 0) {
@@ -33,7 +33,8 @@ public class MenuFila {
 
         } while (capacidade <= 0);
 
-        FilaImpl<Integer> fila = new FilaImpl<>(capacidade);
+        PilhaImpl<Integer> pilha =
+                new PilhaImpl<>(capacidade);
 
         int opcao;
 
@@ -44,23 +45,23 @@ public class MenuFila {
 
             switch (opcao) {
                 case 1:
-                    enfileirar(fila);
+                    empilhar(pilha);
                     break;
 
                 case 2:
-                    desenfileirar(fila);
+                    desempilhar(pilha);
                     break;
 
                 case 3:
-                    consultarInicio(fila);
+                    consultarTopo(pilha);
                     break;
 
                 case 4:
-                    verificarVazia(fila);
+                    verificarVazia(pilha);
                     break;
 
                 case 5:
-                    verificarCheia(fila);
+                    verificarCheia(pilha);
                     break;
 
                 case 6:
@@ -89,14 +90,14 @@ public class MenuFila {
     private void exibirMenu() {
         System.out.println();
         System.out.println("====================================");
-        System.out.println("Fila");
+        System.out.println("Pilha");
         System.out.println("====================================");
         System.out.println();
-        System.out.println("1 - Enfileirar elemento");
+        System.out.println("1 - Empilhar elemento");
         System.out.println();
-        System.out.println("2 - Desenfileirar elemento");
+        System.out.println("2 - Desempilhar elemento");
         System.out.println();
-        System.out.println("3 - Consultar o início da fila");
+        System.out.println("3 - Consultar o topo");
         System.out.println();
         System.out.println("4 - Verificar se está vazia");
         System.out.println();
@@ -108,22 +109,22 @@ public class MenuFila {
         System.out.println();
     }
 
-    private void enfileirar(FilaImpl<Integer> fila) {
+    private void empilhar(PilhaImpl<Integer> pilha) {
         int elemento = lerInteiro(
-                "Digite o elemento que será enfileirado: "
+                "Digite o elemento que será empilhado: "
         );
 
         try {
-            fila.enqueue(elemento);
+            pilha.push(elemento);
 
             System.out.println();
             System.out.println(
                     "Elemento " + elemento
-                            + " enfileirado com sucesso!"
+                            + " empilhado com sucesso!"
             );
 
             System.out.println(
-                    "Elemento no início: " + fila.head()
+                    "Topo atual: " + pilha.top()
             );
 
         } catch (IllegalStateException exception) {
@@ -132,9 +133,9 @@ public class MenuFila {
         }
     }
 
-    private void desenfileirar(FilaImpl<Integer> fila) {
+    private void desempilhar(PilhaImpl<Integer> pilha) {
         try {
-            Integer elementoRemovido = fila.dequeue();
+            Integer elementoRemovido = pilha.pop();
 
             System.out.println();
             System.out.println(
@@ -142,14 +143,13 @@ public class MenuFila {
                             + elementoRemovido
             );
 
-            if (!fila.isEmpty()) {
+            if (!pilha.isEmpty()) {
                 System.out.println(
-                        "Novo início da fila: "
-                                + fila.head()
+                        "Novo topo: " + pilha.top()
                 );
             } else {
                 System.out.println(
-                        "A fila ficou vazia."
+                        "A pilha ficou vazia."
                 );
             }
 
@@ -159,12 +159,11 @@ public class MenuFila {
         }
     }
 
-    private void consultarInicio(FilaImpl<Integer> fila) {
+    private void consultarTopo(PilhaImpl<Integer> pilha) {
         try {
             System.out.println();
             System.out.println(
-                    "Elemento no início: "
-                            + fila.head()
+                    "Elemento no topo: " + pilha.top()
             );
 
         } catch (IllegalStateException exception) {
@@ -173,68 +172,73 @@ public class MenuFila {
         }
     }
 
-    private void verificarVazia(FilaImpl<Integer> fila) {
+    private void verificarVazia(PilhaImpl<Integer> pilha) {
         System.out.println();
 
-        if (fila.isEmpty()) {
-            System.out.println("A fila está vazia.");
+        if (pilha.isEmpty()) {
+            System.out.println("A pilha está vazia.");
         } else {
-            System.out.println("A fila não está vazia.");
+            System.out.println("A pilha não está vazia.");
         }
     }
 
-    private void verificarCheia(FilaImpl<Integer> fila) {
+    private void verificarCheia(PilhaImpl<Integer> pilha) {
         System.out.println();
 
-        if (fila.isFull()) {
-            System.out.println("A fila está cheia.");
+        if (pilha.isFull()) {
+            System.out.println("A pilha está cheia.");
         } else {
-            System.out.println("A fila não está cheia.");
+            System.out.println("A pilha não está cheia.");
         }
     }
 
     private void demonstrarOperacoes() {
-        FilaImpl<Integer> demonstracao =
-                new FilaImpl<>(5);
+        PilhaImpl<Integer> demonstracao =
+                new PilhaImpl<>(5);
 
         System.out.println();
         System.out.println(
                 "Demonstração com os valores 10, 20 e 30:"
         );
 
-        demonstracao.enqueue(10);
-        demonstracao.enqueue(20);
-        demonstracao.enqueue(30);
+        demonstracao.push(10);
+        demonstracao.push(20);
+        demonstracao.push(30);
 
-        System.out.println("10 foi enfileirado.");
-        System.out.println("20 foi enfileirado.");
-        System.out.println("30 foi enfileirado.");
+        System.out.println(
+                "10 foi empilhado."
+        );
+
+        System.out.println(
+                "20 foi empilhado."
+        );
+
+        System.out.println(
+                "30 foi empilhado."
+        );
 
         System.out.println();
         System.out.println(
-                "Início atual: "
-                        + demonstracao.head()
+                "Topo atual: " + demonstracao.top()
         );
 
-        Integer removido = demonstracao.dequeue();
+        Integer removido = demonstracao.pop();
 
         System.out.println(
-                "Elemento desenfileirado: "
-                        + removido
-        );
-
-        System.out.println(
-                "Novo início: "
-                        + demonstracao.head()
+                "Elemento desempilhado: " + removido
         );
 
         System.out.println(
-                "A fila está vazia? "
+                "Novo topo: " + demonstracao.top()
+        );
+
+        System.out.println(
+                "A pilha está vazia? "
                         + demonstracao.isEmpty()
         );
 
         System.out.println(
-                "A fila está cheia? "
+                "A pilha está cheia? "
                         + demonstracao.isFull()
         );
     }
