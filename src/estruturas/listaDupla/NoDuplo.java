@@ -8,12 +8,11 @@ public class NoDuplo<T> {
     // O engate que aponta para o vagão da FRENTE
     private NoDuplo<T> proximo;
 
-    // A GRANDE NOVIDADE: O engate que aponta para o vagão de TRÁS
+    //O ponteiro que aponta para o vagão de TRÁS, elemento anterior.
     private NoDuplo<T> anterior;
 
     /**
      * Construtor: Chamado toda vez que criamos um novo Nó Duplo.
-     * @param dado A informação que queremos guardar.
      */
     public NoDuplo(T dado) {
         this.dado = dado;
