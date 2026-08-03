@@ -105,7 +105,7 @@ public class BSTImpl<T extends Comparable<T>> implements BT<T> {
 
     // calcula a altura da árvore de acordo com a quantidade de níveis
     protected int height(BSTNode<T> no){
-        if (no.isEmpty()){
+        if (no == null){
             return 0;
         }
 
@@ -159,7 +159,7 @@ public class BSTImpl<T extends Comparable<T>> implements BT<T> {
 
     @Override
     public void remove(T key) {
-        BSTNode<T> no = new BSTNode<>(key);
+        BSTNode<T> no = search(key);
 
         if(no == null){
             return;
@@ -308,7 +308,7 @@ public class BSTImpl<T extends Comparable<T>> implements BT<T> {
 
     // calcula o tamanho da árvore
     private int size(BSTNode<T> no){
-        if(no.isEmpty()){
+        if(no == null){
             return 0;
         } else {
             return 1 + size(no.getLeft())+ size(no.getRight());
