@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BSTImpl<T extends Comparable<T>> implements BT<T> {
-    private BSTNode<T> root;
+    protected BSTNode<T> root;
 
     public BSTImpl(){
         this.root = null;
@@ -104,7 +104,7 @@ public class BSTImpl<T extends Comparable<T>> implements BT<T> {
     }
 
     // calcula a altura da árvore de acordo com a quantidade de níveis
-    private int height(BSTNode<T> no){
+    protected int height(BSTNode<T> no){
         if (no.isEmpty()){
             return 0;
         }
