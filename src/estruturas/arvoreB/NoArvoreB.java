@@ -1,4 +1,4 @@
 package estruturas.arvoreB;
 
-public interface ArvoreB {
+public class NoArvoreB {
 }
