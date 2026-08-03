@@ -62,21 +62,104 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
         // 4. Aumentamos o tamanho do trem
         this.tamanho++;
     }
-
-    @Override
-    public void remove(T elemento) {
-        // Será implementado a seguir
-    }
-
+    /**
+     * Busca um elemento específico na lista.
+     * A complexidade é O(n), pois no pior dos casos precisamos percorrer toda a lista.
+     * @param elemento A informação a ser procurada.
+     * @return O próprio elemento se encontrado, ou null se não existir na lista.
+     */
     @Override
     public T search(T elemento) {
-        // Será implementado a seguir
+        // 1. O inspetor começa a busca pelo primeiro vagão
+        NoDuplo<T> atual = this.inicio;
+
+        // 2. Enquanto o inspetor não cair do trem (chegar no final)
+        while (atual != null) {
+
+            // 3. Verifica se a carga deste vagão é exatamente a que procuramos
+            // Lembre-se: usamos .equals() para comparar o CONTEÚDO de objetos
+            if (atual.getDado().equals(elemento)) {
+                return atual.getDado(); // Achou! Retorna a carga.
+            }
+
+            // 4. Se não era a carga certa, o inspetor anda para o vagão da FRENTE
+            atual = atual.getProximo();
+        }
+
+        // 5. Se o while terminou e o método não retornou nada, é porque a carga não está no trem
         return null;
     }
-
+    /**
+     * Remove a primeira ocorrência de um elemento específico da lista.
+     */
     @Override
+    public void remove(T elemento) {
+        // Se a lista está vazia, não há o que remover
+        if (isEmpty()) {
+            return;
+        }
+
+        // 1. Mandamos o inspetor achar o vagão
+        NoDuplo<T> atual = this.inicio;
+        while (atual != null && !atual.getDado().equals(elemento)) {
+            atual = atual.getProximo();
+        }
+
+        // Se chegou ao final e não achou, o elemento não está na lista
+        if (atual == null) {
+            return;
+        }
+
+        // 2. Cenário 1: É o único vagão do trem
+        if (this.inicio == this.fim) {
+            this.inicio = null;
+            this.fim = null;
+        }
+        // 3. Cenário 2: É o primeiro vagão (mas tem outros depois)
+        else if (atual == this.inicio) {
+            this.inicio = atual.getProximo(); // O segundo passa a ser o primeiro
+            this.inicio.setAnterior(null);    // Corta a ligação com o vagão removido
+        }
+        // 4. Cenário 3: É o último vagão
+        else if (atual == this.fim) {
+            this.fim = atual.getAnterior();   // O penúltimo passa a ser o último
+            this.fim.setProximo(null);        // Corta a ligação com o vagão removido
+        }
+        // 5. Cenário 4: O vagão está no meio
+        else {
+            NoDuplo<T> vagaoAnterior = atual.getAnterior();
+            NoDuplo<T> vagaoProximo = atual.getProximo();
+
+            // O vagão de trás aponta para o da frente
+            vagaoAnterior.setProximo(vagaoProximo);
+
+            // O vagão da frente aponta para o de trás
+            vagaoProximo.setAnterior(vagaoAnterior);
+        }
+
+        // 6. Reduzimos o tamanho oficial do trem
+        this.tamanho--;
+    }
+
+    /**
+     * Converte a Lista Duplamente Encadeada para um Array convencional. Mostra os elementos na ordem atual
+     */
+    @Override
+    @SuppressWarnings("unchecked")
     public T[] toArray() {
-        // Será implementado a seguir
-        return null;
+        // Cria um array convencional do tamanho exato da nossa lista
+        T[] array = (T[]) new Object[this.tamanho];
+
+        NoDuplo<T> atual = this.inicio;
+        int index = 0;
+
+        // Percorre a lista copiando a carga de cada vagão para o array
+        while (atual != null) {
+            array[index] = atual.getDado();
+            atual = atual.getProximo();
+            index++;
+        }
+
+        return array;
     }
 }
