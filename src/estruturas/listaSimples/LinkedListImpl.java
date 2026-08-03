@@ -116,7 +116,7 @@ public class LinkedListImpl<T> implements LinkedList<T> {
             atual = atual.getProximo();  // O 'atual' avança para o próximo vagão
         }
 
-        // 4. Se o laço terminou e o 'atual' é nulo, significa que chegamos ao fim do trem
+        // 4. Se o laço terminou e o 'atual' é nulo, significa que chegamos ao fim da lista
         // e não encontramos o elemento. Não fazemos nada.
         if (atual == null) {
             return;
@@ -130,16 +130,36 @@ public class LinkedListImpl<T> implements LinkedList<T> {
         // 6. Por fim, diminuímos o tamanho da lista.
         this.tamanho--;
     }
-
-    @Override
-    public T search(T elemento) {
-        // A ser implementado na próxima etapa...
-        return null;
-    }
-
+    /**
+     * Converte a lista encadeada em um Array tradicional do Java.
+     */
+    @SuppressWarnings("unchecked") // Diz ao Java para ignorar o aviso de segurança do Cast (padrão em estruturas genéricas)
     @Override
     public T[] toArray() {
-        // A ser implementado na próxima etapa...
-        return null;
+        // 1. Criamos um "manifesto em branco" (um Array) com o tamanho exato da nossa lista.
+        // O truque do Type Erasure: criamos como Object[] e fazemos o cast para T[]
+        T[] array = (T[]) new Object[this.tamanho];
+
+        // 2. O inspetor começa do primeiro vagão
+        No<T> atual = this.inicio;
+
+        // 3. Precisamos de um índice para saber em qual linha da folha (posição do array) vamos escrever
+        int i = 0;
+
+        // 4. Enquanto houver vagões...
+        while (atual != null) {
+            // Copiamos a carga do vagão atual para o nosso array na posição 'i'
+            array[i] = atual.getDado();
+
+            // O inspetor avança para o próximo vagão
+            atual = atual.getProximo();
+
+            // Avançamos para a próxima linha da folha (próxima posição do array)
+            i++;
+        }
+
+        // 5. Retornamos o manifesto preenchido
+        return array;
     }
+
 }
