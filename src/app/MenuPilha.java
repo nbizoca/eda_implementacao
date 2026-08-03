@@ -93,9 +93,9 @@ public class MenuPilha {
         System.out.println("Pilha");
         System.out.println("====================================");
         System.out.println();
-        System.out.println("1 - Empilhar elemento");
+        System.out.println("1 - Empilhar elemento(Adcionar)");
         System.out.println();
-        System.out.println("2 - Desempilhar elemento");
+        System.out.println("2 - Desempilhar elemento(Remover)");
         System.out.println();
         System.out.println("3 - Consultar o topo");
         System.out.println();
